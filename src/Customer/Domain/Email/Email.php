@@ -3,8 +3,7 @@
 
 namespace App\Customer\Domain\Email;
 
-
-class Email
+final class Email
 {
     const EMAIL_REGEX = "/^[^ @]+@[^ .]+\.[^ .]+$/";
     private string $address;
@@ -14,25 +13,23 @@ class Email
      *
      * @param string $address
      *
-     * @throws EmailDomainException
      */
     private function __construct(string $address)
     {
-        $this->validate($address);
-
         $this->address = $address;
-
     }
 
     /**
-     * @param string $adress
+     * @param string $address
      *
      * @return Email
      * @throws EmailDomainException
      */
-    public static function setAddress(string $adress): self
+    public static function create(string $address): self
     {
-        return new self($adress);
+        self::validate($address);
+
+        return new self($address);
     }
 
     /**
@@ -40,7 +37,7 @@ class Email
      *
      * @throws EmailDomainException
      */
-    private function validate(string $adress)
+    private static function validate(string $adress)
     {
         if ( ! preg_match(self::EMAIL_REGEX, $adress)) {
             EmailDomainException::badFormat($adress);

@@ -5,7 +5,7 @@ namespace App\Product\Domain\Product;
 
 use Exception;
 
-class ProductDomainException extends Exception
+final class ProductDomainException extends Exception
 {
 
 }

@@ -3,19 +3,21 @@
 
 namespace App\Customer\Domain\CustomerName;
 
-
-class CustomerName
+final class CustomerName
 {
     const FORMAT = "^([a-zA-Z]{2,}\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)";
     private string $name;
 
     private function __construct(string $name)
     {
-        $this->assertValidFormat($name);
         $this->name = $name;
     }
 
-
+    /**
+     * @param CustomerName $customerName
+     *
+     * @return bool
+     */
     public function equal(CustomerName $customerName): bool
     {
         return $this->name === $customerName->name;
@@ -29,13 +31,25 @@ class CustomerName
         return $this->name;
     }
 
-
-    public static function setName(string $username): self
+    /**
+     * @param string $username
+     *
+     * @return static
+     * @throws CustomerNameDomainException
+     */
+    public static function create(string $username): self
     {
+        self::assertValidFormat($username);
+
         return new self($username);
     }
 
-    private function assertValidFormat(string $name)
+    /**
+     * @param string $name
+     *
+     * @throws CustomerNameDomainException
+     */
+    private static function assertValidFormat(string $name)
     {
         if (preg_match(self::FORMAT, $name) !== 1) {
             CustomerNameDomainException::badFormat($name);

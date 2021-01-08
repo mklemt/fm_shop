@@ -3,13 +3,28 @@
 
 namespace App\Order\Domain\Order;
 
-
+use App\Order\Domain\Quantity\Quantity;
 use App\Shared\Domain\Identifier\Identifier;
 
-class Order
+final class Order
 {
-    private function __construct(Identifier $orderId, string $orderNumber, string $customerId, string $description, int $total)
+    private string $customerId;
+    private array $lines;
+    private array $events = [];
+
+    private function __construct(Identifier $customerId)
     {
+        $this->customerId = $customerId;
+    }
+
+    public function addLine(Identifier $productId, Quantity $quantity)
+    {
+        $this->lines[] = new OrderLine($productId, $quantity);
+    }
+
+    public function releaseEvents(): array
+    {
+        return $this->events;
     }
 
 }

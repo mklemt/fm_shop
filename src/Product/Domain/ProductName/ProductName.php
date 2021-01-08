@@ -4,21 +4,28 @@
 namespace App\Product\Domain\ProductName;
 
 
-class ProductName
+final class ProductName
 {
     const MIN_LENGTH = 5;
     const MAX_LENGTH = 50;
-
     private string $productName;
 
+    /**
+     * ProductName constructor.
+     *
+     * @param string $productName
+     */
     private function __construct(string $productName)
     {
-        $this->assertLengthString($productName);
-
         $this->productName = $productName;
     }
 
-    private function assertLengthString(string $productName): void
+    /**
+     * @param string $productName
+     *
+     * @throws ProductNameDomainException
+     */
+    private static function assertLengthString(string $productName): void
     {
         if (empty($productName)) {
             ProductNameDomainException::isEmpty();
@@ -31,16 +38,32 @@ class ProductName
         }
     }
 
-    public static function setName(string $productName): self
+    /**
+     * @param string $productName
+     *
+     * @return static
+     * @throws ProductNameDomainException
+     */
+    public static function create(string $productName): self
     {
+        self::assertLengthString($productName);
+
         return new self($productName);
     }
 
+    /**
+     * @param ProductName $name
+     *
+     * @return bool
+     */
     public function equal(ProductName $name): bool
     {
         return $this->productName === $name->productName;
     }
 
+    /**
+     * @return string
+     */
     public function value(): string
     {
         return $this->productName;

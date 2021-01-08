@@ -3,13 +3,12 @@
 
 namespace App\Customer\Domain\Customer;
 
-
 use App\Customer\Domain\CustomerName\CustomerName;
 use App\Customer\Domain\Email\Email;
 use App\Shared\Domain\DateTime\DateTime;
 use App\Shared\Domain\Identifier\Identifier;
 
-class Customer
+final class Customer
 {
     /**
      * @var Identifier
@@ -28,7 +27,9 @@ class Customer
      */
     private DateTime $dateOfBirth;
 
-    public function __construct(Identifier $identifier, CustomerName $customerName, Email $email, DateTime $dateOfBirth)
+    private array $events = [];
+
+    private function __construct(Identifier $identifier, CustomerName $customerName, Email $email, DateTime $dateOfBirth)
     {
         $this->identifier   = $identifier;
         $this->customerName = $customerName;
@@ -41,4 +42,18 @@ class Customer
         return DateTime::checkAdultAge($this->dateOfBirth);
     }
 
+    public static function create(Identifier $identifier, CustomerName $customerName, Email $email, DateTime $dateOfBirth): self
+    {
+        return new self($identifier, $customerName, $email, $dateOfBirth);
+    }
+
+    public function releaseEvents(): array
+    {
+        return $this->events;
+    }
+
+    public function customerId(): string
+    {
+        return $this->identifier->value();
+    }
 }

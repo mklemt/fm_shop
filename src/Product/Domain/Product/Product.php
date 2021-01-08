@@ -3,11 +3,10 @@
 
 namespace App\Product\Domain\Product;
 
-
 use App\Product\Domain\ProductName\ProductName;
 use App\Shared\Domain\Identifier\Identifier;
 
-class Product
+final class Product
 {
     /**
      * @var Identifier
@@ -18,14 +17,48 @@ class Product
      */
     private ProductName $productName;
 
-    private array $events = [];
-    private bool $forAdultsOnly;
+    private bool $isAvailable;
 
-    private function __construct(Identifier $identifier, ProductName $productName, bool $forAdultsOnly)
+    private array $events = [];
+
+    private function __construct(Identifier $identifier, ProductName $productName)
     {
-        $this->identifier = $identifier;
+        $this->identifier  = $identifier;
         $this->productName = $productName;
-        $this->forAdultsOnly = $forAdultsOnly;
+    }
+
+    public static function create(Identifier $identifier, ProductName $productName): self
+    {
+        $product = new self($identifier, $productName);
+        $product->available();
+
+        return $product;
+    }
+
+    public function isAvailable(): bool
+    {
+        return $this->isAvailable;
+    }
+
+    public function available(): void
+    {
+        $this->isAvailable = true;
+    }
+
+    public function unAvailable(): void
+    {
+        $this->isAvailable = false;
+    }
+
+    public function releaseEvents(): array
+    {
+        return $this->events;
+    }
+
+    public function productId(): string
+    {
+        return $this->identifier->value();
+
     }
 
 }

@@ -6,7 +6,7 @@ namespace App\Shared\Domain\Identifier;
 use Exception;
 use Throwable;
 
-class IdentifierDomainException extends Exception
+final class IdentifierDomainException extends Exception
 {
     private function __construct($message = "", $code = 0, Throwable $previous = null)
     {

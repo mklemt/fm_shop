@@ -6,7 +6,7 @@ namespace App\Product\Domain\ProductName;
 use Exception;
 use Throwable;
 
-class ProductNameDomainException extends Exception
+final class ProductNameDomainException extends Exception
 {
     private function __construct($message = "", $code = 0, Throwable $previous = null)
     {

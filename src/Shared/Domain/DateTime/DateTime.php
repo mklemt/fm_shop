@@ -6,19 +6,27 @@ namespace App\Shared\Domain\DateTime;
 
 use DateTimeImmutable;
 
-class DateTime
+final class DateTime
 {
     const ADULT_AGE = 18;
     private DateTimeImmutable $dateTimeImmutable;
 
+    /**
+     * DateTime constructor.
+     *
+     * @param DateTimeImmutable $dateTimeImmutable
+     */
     private function __construct(DateTimeImmutable $dateTimeImmutable)
     {
         $this->dateTimeImmutable = $dateTimeImmutable;
     }
 
+    /**
+     * @return static
+     */
     public static function now(): self
     {
-        $dateTimeImmutable = new DateTimeImmutable();
+        $dateTimeImmutable = new DateTimeImmutable('now');
 
         return new DateTime($dateTimeImmutable);
     }
@@ -39,13 +47,31 @@ class DateTime
         return $this->dateTimeImmutable;
     }
 
-    public function equal(DateTime $dateTime)
-    {
-
-    }
-
     public static function create(DateTimeImmutable $dateTime): self
     {
+        if ( ! self::validateDate($dateTime)) {
+            DateTimeException::notValidDateFormatString();
+        }
+
         return new DateTime($dateTime);
     }
+
+    public static function createFromFormat(DateTimeImmutable $date, $format = 'Y-m-d'): self
+    {
+        if ( ! self::validateDate($date, $format)) {
+            DateTimeException::notValidDateFormatString();
+        }
+        $dateTime = DateTimeImmutable::createFromFormat($format, $date);
+
+        return new DateTime($dateTime);
+    }
+
+    public static function validateDate(DateTimeImmutable $date, $format = 'Y-m-d'): bool
+    {
+        $toValidate = DateTimeImmutable::createFromFormat($format, $date);
+
+        return $toValidate && $toValidate->format($format) === $date;
+
+    }
+
 }

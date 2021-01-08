@@ -6,7 +6,7 @@ namespace App\Customer\Domain\Email;
 use Exception;
 use Throwable;
 
-class EmailDomainException extends Exception
+final class EmailDomainException extends Exception
 {
     private function __construct($message = "", $code = 0, Throwable $previous = null)
     {
