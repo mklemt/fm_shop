@@ -19,7 +19,7 @@ final class Quantity
         return new self($quantity);
     }
 
-    public static function unique(int $quantity): self
+    public static function onlyOne(int $quantity): self
     {
         self::toLittleAssert($quantity);
         self::onlyOneAssert($quantity);

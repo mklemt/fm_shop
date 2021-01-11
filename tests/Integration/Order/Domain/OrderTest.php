@@ -28,12 +28,12 @@ class OrderTest extends OrderBase
         $this->product           = Product::create($this->productId, $this->productName);
         $this->productRepository = new MockProductRepository($this->product);
         $this->order             = Order::create($this->orderId, $this->customerId);
-        $this->quantity          = Quantity::unique(1);
+        $this->quantity          = Quantity::onlyOne(1);
     }
 
     public function testICanCreateOrderForUniqueProduct()
     {
-        $this->order->addLineForUniqeProduct($this->product, $this->quantity);
+        $this->order->addLineForUniqeProductForAdults($this->product, $this->quantity, $this->customer);
 
         $this->dispatchListener();
         $this->assertFalse($this->productRepository->getById($this->product->productId())->isAvailable());
@@ -41,11 +41,11 @@ class OrderTest extends OrderBase
 
     public function testICanCreateOrderFor2SameUniqueProducts()
     {
-        $this->order->addLineForUniqeProduct($this->product, $this->quantity);
+        $this->order->addLineForUniqeProductForAdults($this->product, $this->quantity, $this->customer);
 
         $this->dispatchListener();
         $this->expectException(OrderDomainException::class);
-        $this->order->addLineForUniqeProduct($this->product, $this->quantity);
+        $this->order->addLineForUniqeProductForAdults($this->product, $this->quantity, $this->customer);
     }
 
     private function dispatchListener(): void

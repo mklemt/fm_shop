@@ -3,6 +3,7 @@
 
 namespace App\Order\Domain\Order;
 
+use App\Customer\Domain\Customer\Customer;
 use App\Order\Domain\Quantity\Quantity;
 use App\Product\Domain\Product\Product;
 use App\Shared\Domain\Identifier\Identifier;
@@ -29,8 +30,11 @@ final class Order
     }
 
 
-    public function addLineForUniqeProduct(Product $product, Quantity $quantity)
+    public function addLineForUniqeProductForAdults(Product $product, Quantity $quantity, Customer $customer)
     {
+        if ( ! $customer->isAdult()) {
+            OrderDomainException::customerIsTooYoungForProduct($product->name()->value());
+        }
         if ($quantity->total() > 1) {
             OrderDomainException::quantityIsGraterThenOne();
         }

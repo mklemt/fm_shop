@@ -20,4 +20,10 @@ class OrderDomainException extends Exception
 
         throw new self($message);
     }
+
+    public static function customerIsTooYoungForProduct(string $productName)
+    {
+        $message = sprintf("Unikatowy produkt %s jest udostępniony do zakupu tylko przez dorosłych użytkowników", $productName);
+        throw new self($message);
+    }
 }
