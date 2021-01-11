@@ -12,13 +12,7 @@ use App\Product\Domain\Product\Product;
 
 class OrderTest extends OrderBase
 {
-    /**
-     * @var Product
-     */
     private Product $product;
-    /**
-     * @var Customer
-     */
     private Customer $customer;
 
     public function setUp()

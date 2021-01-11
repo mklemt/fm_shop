@@ -9,7 +9,6 @@ use App\Customer\Domain\CustomerName\CustomerNameDomainException;
 use App\Customer\Domain\Email\Email;
 use App\Customer\Domain\Email\EmailDomainException;
 use App\Shared\Domain\AppDateTime\AppDateTime;
-use App\Shared\Domain\Identifier\Identifier;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\Uuid;
 

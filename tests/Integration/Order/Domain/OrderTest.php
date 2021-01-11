@@ -16,13 +16,7 @@ use App\Tests\Unit\Order\Domain\OrderBase;
 class OrderTest extends OrderBase
 {
     private Customer $customer;
-    /**
-     * @var Product
-     */
     private Product $product;
-    /**
-     * @var MockProductRepository
-     */
     private MockProductRepository $productRepository;
 
     public function setUp()
