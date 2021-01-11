@@ -14,7 +14,7 @@ final class OrderLine
      */
     private Quantity $quantity;
 
-    public function __construct(Identifier $productId, Quantity $quantity)
+    public function __construct(string $productId, Quantity $quantity)
     {
         $this->productId = $productId;
         $this->quantity = $quantity;

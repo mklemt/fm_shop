@@ -5,7 +5,8 @@ namespace App\Customer\Domain\CustomerName;
 
 final class CustomerName
 {
-    const FORMAT = "^([a-zA-Z]{2,}\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)";
+    const MIN_LENGTH = 5;
+    const MAX_LENGTH = 30;
     private string $name;
 
     private function __construct(string $name)
@@ -39,7 +40,7 @@ final class CustomerName
      */
     public static function create(string $username): self
     {
-        self::assertValidFormat($username);
+        self::assertValidLength($username);
 
         return new self($username);
     }
@@ -49,11 +50,18 @@ final class CustomerName
      *
      * @throws CustomerNameDomainException
      */
-    private static function assertValidFormat(string $name)
+    private static function assertValidLength(string $name)
     {
-        if (preg_match(self::FORMAT, $name) !== 1) {
-            CustomerNameDomainException::badFormat($name);
+        if (empty($name)) {
+            CustomerNameDomainException::isEmpty();
         }
+        if (strlen($name) < self::MIN_LENGTH) {
+            CustomerNameDomainException::isTooShort($name, self::MIN_LENGTH);
+        }
+        if (strlen($name) > self::MAX_LENGTH) {
+            CustomerNameDomainException::isTooLong($name, self::MAX_LENGTH);
+        }
+
     }
 
 }

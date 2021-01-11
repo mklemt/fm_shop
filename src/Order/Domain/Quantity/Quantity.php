@@ -41,4 +41,9 @@ final class Quantity
             QuantityDomainException::canOnlyBeOne();
         }
     }
+
+    public function total()
+    {
+        return $this->quantity;
+    }
 }

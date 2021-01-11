@@ -31,4 +31,25 @@ final class CustomerNameDomainException extends Exception
 
         throw new self($message);
     }
+
+    public static function isTooShort(string $username, int $minLength)
+    {
+        $message = sprintf("Podana nazwa użytkownika %s jest zbyt krótka. Musi być większa niż %s", $username, $minLength);
+
+        throw new self($message);
+    }
+
+    public static function isTooLong(string $username, int $maxLength)
+    {
+        $message = sprintf("Podana nazwa użytkownika %s jest zbyt długa. Musi być mniejsza niż %s", $username, $maxLength);
+
+        throw new self($message);
+    }
+
+    public static function isEmpty()
+    {
+        $message = sprintf("Podana nazwa użytkownika jest pusta");
+
+        throw new self($message);
+    }
 }

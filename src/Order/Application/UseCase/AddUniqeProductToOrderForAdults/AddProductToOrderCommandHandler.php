@@ -33,8 +33,10 @@ final class AddProductToOrderCommandHandler implements CommandHandlerInterface
         // TODO: sprawdź czy jest dostępny product->isAvailable()
         // TODO: utwórz quantitty = Quantity::unique(ilość)
         // TODO: dodaj do zamówienia Order->addLine(Identtifier::fromString(prduct->getId()), quantitty)
+
         // TODO: zmień dostępność produktu product->unavailable()
         // TODO: zapisz product do repozytorium productRepository->save(product)
+        // TODO: albo wykorzystaj listenera nasłuchującego eventu UniqueProductWasOrdered i w nim zmień dostępność produktu
     }
 
 }

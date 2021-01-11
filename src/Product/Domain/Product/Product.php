@@ -61,4 +61,10 @@ final class Product
 
     }
 
+    public function name()
+    {
+        return $this->productName;
+
+    }
+
 }

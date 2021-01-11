@@ -6,7 +6,7 @@ namespace App\Product\Domain\ProductName;
 
 final class ProductName
 {
-    const MIN_LENGTH = 5;
+    const MIN_LENGTH = 2;
     const MAX_LENGTH = 50;
     private string $productName;
 

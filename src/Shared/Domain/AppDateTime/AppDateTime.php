@@ -1,18 +1,18 @@
 <?php
 
 
-namespace App\Shared\Domain\DateTime;
+namespace App\Shared\Domain\AppDateTime;
 
 
 use DateTimeImmutable;
 
-final class DateTime
+final class AppDateTime
 {
     const ADULT_AGE = 18;
     private DateTimeImmutable $dateTimeImmutable;
 
     /**
-     * DateTime constructor.
+     * AppDateTime constructor.
      *
      * @param DateTimeImmutable $dateTimeImmutable
      */
@@ -28,10 +28,10 @@ final class DateTime
     {
         $dateTimeImmutable = new DateTimeImmutable('now');
 
-        return new DateTime($dateTimeImmutable);
+        return new AppDateTime($dateTimeImmutable);
     }
 
-    public static function checkAdultAge(DateTime $dateOfBirth): bool
+    public static function checkAdultAge(AppDateTime $dateOfBirth): bool
     {
         $today    = new DateTimeImmutable(date("Y-m-d"));
         $interval = $today->diff($dateOfBirth->value());
@@ -50,28 +50,27 @@ final class DateTime
     public static function create(DateTimeImmutable $dateTime): self
     {
         if ( ! self::validateDate($dateTime)) {
-            DateTimeException::notValidDateFormatString();
+            AppDateTimeException::notValidDateFormatString();
         }
 
-        return new DateTime($dateTime);
+        return new AppDateTime($dateTime);
     }
 
-    public static function createFromFormat(DateTimeImmutable $date, $format = 'Y-m-d'): self
+    public static function createFromFormat(string $dateString, $format = 'Y-m-d'): self
     {
-        if ( ! self::validateDate($date, $format)) {
-            DateTimeException::notValidDateFormatString();
+        if ( ! self::validateDate($dateString, $format)) {
+            AppDateTimeException::notValidDateFormatString();
         }
-        $dateTime = DateTimeImmutable::createFromFormat($format, $date);
+        $dateTime = DateTimeImmutable::createFromFormat($format, $dateString);
 
-        return new DateTime($dateTime);
+        return new AppDateTime($dateTime);
     }
 
-    public static function validateDate(DateTimeImmutable $date, $format = 'Y-m-d'): bool
+    public static function validateDate(string $dateString, $format = 'Y-m-d'): bool
     {
-        $toValidate = DateTimeImmutable::createFromFormat($format, $date);
+        $toValidate = DateTimeImmutable::createFromFormat($format, $dateString);
 
-        return $toValidate && $toValidate->format($format) === $date;
-
+        return $toValidate && $toValidate->format($format) === $dateString;
     }
 
 }

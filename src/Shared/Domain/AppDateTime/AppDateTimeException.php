@@ -1,11 +1,11 @@
 <?php
 
 
-namespace App\Shared\Domain\DateTime;
+namespace App\Shared\Domain\AppDateTime;
 
 use Exception;
 
-class DateTimeException extends Exception
+class AppDateTimeException extends Exception
 {
 
     public static function notValidDateFormatString()
