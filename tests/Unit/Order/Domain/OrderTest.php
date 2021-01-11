@@ -32,7 +32,7 @@ class OrderTest extends OrderBase
     public function testICanCreateOrderForProduct()
     {
         $order    = Order::create($this->orderId, $this->customerId);
-        $quantity = Quantity::onlyOne(1);
+        $quantity = Quantity::onlyOne();
         $order->addLineForUniqeProductForAdults($this->product, $quantity, $this->customer);
         $this->assertNotEmpty($order->getLines());
 
@@ -44,7 +44,7 @@ class OrderTest extends OrderBase
         $childBirthDate = AppDateTime::createFromFormat("2010-01-01", "Y-m-d");
         $customer       = Customer::create($this->customerId, $this->customerName, $this->email, $childBirthDate);
         $order          = Order::create($this->orderId, $customer->customerId());
-        $quantity       = Quantity::onlyOne(1);
+        $quantity       = Quantity::onlyOne();
         $order->addLineForUniqeProductForAdults($this->product, $quantity, $customer);
     }
 
@@ -52,17 +52,8 @@ class OrderTest extends OrderBase
     {
         $this->expectException(OrderDomainException::class);
         $order    = Order::create($this->orderId, $this->customerId);
-        $quantity = Quantity::onlyOne(1);
+        $quantity = Quantity::onlyOne();
         $this->product->unAvailable();
-        $order->addLineForUniqeProductForAdults($this->product, $quantity, $this->customer);
-
-    }
-
-    public function testIfQuantityOfProductsCanBeGreterThenOne()
-    {
-        $this->expectException(QuantityDomainException::class);
-        $order    = Order::create($this->orderId, $this->customerId);
-        $quantity = Quantity::onlyOne(2);
         $order->addLineForUniqeProductForAdults($this->product, $quantity, $this->customer);
 
     }

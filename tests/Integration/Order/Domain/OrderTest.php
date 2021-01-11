@@ -28,7 +28,7 @@ class OrderTest extends OrderBase
         $this->product           = Product::create($this->productId, $this->productName);
         $this->productRepository = new MockProductRepository($this->product);
         $this->order             = Order::create($this->orderId, $this->customerId);
-        $this->quantity          = Quantity::onlyOne(1);
+        $this->quantity          = Quantity::onlyOne();
     }
 
     public function testICanCreateOrderForUniqueProduct()
