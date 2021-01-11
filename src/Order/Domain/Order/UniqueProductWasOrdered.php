@@ -1,10 +1,12 @@
 <?php
 
 
-namespace App\Product\Domain\Product;
+namespace App\Order\Domain\Order;
 
 
-class UniqueProductWasOrdered
+use App\Order\Domain\OrderEventInterface;
+
+class UniqueProductWasOrdered implements OrderEventInterface
 {
     private string $productId;
 

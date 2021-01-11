@@ -1,9 +1,9 @@
 <?php
 
 
-namespace App\Product\Application\Event;
+namespace App\Order\Application\Event;
 
-use App\Product\Domain\Product\UniqueProductWasOrdered;
+use App\Order\Domain\Order\UniqueProductWasOrdered;
 use App\Product\Domain\ProductRepositoryInterface;
 
 class UniqueProductWasOrderedListener

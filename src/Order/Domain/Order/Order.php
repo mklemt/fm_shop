@@ -5,7 +5,6 @@ namespace App\Order\Domain\Order;
 
 use App\Order\Domain\Quantity\Quantity;
 use App\Product\Domain\Product\Product;
-use App\Product\Domain\Product\UniqueProductWasOrdered;
 use App\Shared\Domain\Identifier\Identifier;
 
 final class Order

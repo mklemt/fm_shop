@@ -4,12 +4,12 @@
 namespace App\Tests\Integration\Order\Domain;
 
 use App\Customer\Domain\Customer\Customer;
+use App\Order\Application\Event\UniqueProductWasOrderedListener;
 use App\Order\Domain\Order\Order;
 use App\Order\Domain\Order\OrderDomainException;
+use App\Order\Domain\Order\UniqueProductWasOrdered;
 use App\Order\Domain\Quantity\Quantity;
-use App\Product\Application\Event\UniqueProductWasOrderedListener;
 use App\Product\Domain\Product\Product;
-use App\Product\Domain\Product\UniqueProductWasOrdered;
 use App\Product\Infrastructure\Repository\MockProductRepository;
 use App\Tests\Unit\Order\Domain\OrderBase;
 
@@ -18,6 +18,8 @@ class OrderTest extends OrderBase
     private Customer $customer;
     private Product $product;
     private MockProductRepository $productRepository;
+    private Order $order;
+    private Quantity $quantity;
 
     public function setUp()
     {
@@ -25,38 +27,35 @@ class OrderTest extends OrderBase
         $this->customer          = Customer::create($this->customerId, $this->customerName, $this->email, $this->birthDate);
         $this->product           = Product::create($this->productId, $this->productName);
         $this->productRepository = new MockProductRepository($this->product);
+        $this->order             = Order::create($this->orderId, $this->customerId);
+        $this->quantity          = Quantity::unique(1);
     }
 
     public function testICanCreateOrderForUniqueProduct()
     {
-        $order    = Order::create($this->orderId, $this->customerId);
-        $quantity = Quantity::unique(1);
-        $order->addLineForUniqeProduct($this->product, $quantity);
+        $this->order->addLineForUniqeProduct($this->product, $this->quantity);
 
-        $listener = new UniqueProductWasOrderedListener($this->productRepository);
-
-        foreach ($order->releaseEvents() as $event) {
-            if ($event instanceof UniqueProductWasOrdered) {
-                $listener->handle($event);
-            }
-        }
+        $this->dispatchListener();
         $this->assertFalse($this->productRepository->getById($this->product->productId())->isAvailable());
     }
 
     public function testICanCreateOrderFor2SameUniqueProducts()
     {
-        $order    = Order::create($this->orderId, $this->customerId);
-        $quantity = Quantity::unique(1);
-        $order->addLineForUniqeProduct($this->product, $quantity);
+        $this->order->addLineForUniqeProduct($this->product, $this->quantity);
 
+        $this->dispatchListener();
+        $this->expectException(OrderDomainException::class);
+        $this->order->addLineForUniqeProduct($this->product, $this->quantity);
+    }
+
+    private function dispatchListener(): void
+    {
         $listener = new UniqueProductWasOrderedListener($this->productRepository);
 
-        foreach ($order->releaseEvents() as $event) {
+        foreach ($this->order->releaseEvents() as $event) {
             if ($event instanceof UniqueProductWasOrdered) {
                 $listener->handle($event);
             }
         }
-        $this->expectException(OrderDomainException::class);
-        $order->addLineForUniqeProduct($this->product, $quantity);
     }
 }
