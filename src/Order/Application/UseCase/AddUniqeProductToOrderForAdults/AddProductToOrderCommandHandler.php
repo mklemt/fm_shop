@@ -4,6 +4,7 @@
 namespace App\Order\Application\UseCase\AddUniqeProductToOrderForAdults;
 
 use App\Customer\Domain\CustomerRepositoryInterface;
+use App\Order\Domain\OrderRepositoryInterface;
 use App\Product\Domain\ProductRepositoryInterface;
 use App\Shared\Application\CommandBus\CommandHandlerInterface;
 
@@ -17,11 +18,16 @@ final class AddProductToOrderCommandHandler implements CommandHandlerInterface
      * @var ProductRepositoryInterface
      */
     private ProductRepositoryInterface $productRepository;
+    /**
+     * @var OrderRepositoryInterface
+     */
+    private OrderRepositoryInterface $orderRepository;
 
-    public function __construct(CustomerRepositoryInterface $customerRepository, ProductRepositoryInterface $productRepository)
+    public function __construct(CustomerRepositoryInterface $customerRepository, ProductRepositoryInterface $productRepository, OrderRepositoryInterface $orderRepository)
     {
         $this->customerRepository = $customerRepository;
-        $this->productRepository = $productRepository;
+        $this->productRepository  = $productRepository;
+        $this->orderRepository = $orderRepository;
     }
 
     public function __invoke(AddProductToOrderCommand $command)
