@@ -3,7 +3,6 @@
 
 namespace App\Order\Domain\Order;
 
-
 use App\Order\Domain\OrderEventInterface;
 
 class UniqueProductWasOrdered implements OrderEventInterface

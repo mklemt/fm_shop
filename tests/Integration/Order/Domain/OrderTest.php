@@ -53,9 +53,7 @@ class OrderTest extends OrderBase
         $listener = new UniqueProductWasOrderedListener($this->productRepository);
 
         foreach ($this->order->releaseEvents() as $event) {
-            if ($event instanceof UniqueProductWasOrdered) {
-                $listener->handle($event);
-            }
+            $listener->handle($event);
         }
     }
 }
