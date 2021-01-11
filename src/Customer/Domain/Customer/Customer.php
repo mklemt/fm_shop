@@ -51,7 +51,10 @@ final class Customer
 
     public function releaseEvents(): array
     {
-        return $this->events;
+        $events       = $this->events;
+        $this->events = [];
+
+        return $events;
     }
 
     public function customerId(): string
