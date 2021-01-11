@@ -27,9 +27,10 @@ final class Product
         $this->productName = $productName;
     }
 
-    public static function create(Identifier $identifier, ProductName $productName): self
+    public static function create(string $identifier, ProductName $productName): self
     {
-        $product = new self($identifier, $productName);
+        $uuid    = Identifier::fromString($identifier);
+        $product = new self($uuid, $productName);
         $product->available();
 
         return $product;

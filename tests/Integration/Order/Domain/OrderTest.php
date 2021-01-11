@@ -35,7 +35,7 @@ class OrderTest extends OrderBase
 
     public function testICanCreateOrderForUniqueProduct()
     {
-        $order    = Order::create($this->orderId->value(), $this->customerId->value());
+        $order    = Order::create($this->orderId, $this->customerId);
         $quantity = Quantity::unique(1);
         $order->addLineForUniqeProduct($this->product, $quantity);
 
@@ -51,7 +51,7 @@ class OrderTest extends OrderBase
 
     public function testICanCreateOrderFor2SameUniqueProducts()
     {
-        $order    = Order::create($this->orderId->value(), $this->customerId->value());
+        $order    = Order::create($this->orderId, $this->customerId);
         $quantity = Quantity::unique(1);
         $order->addLineForUniqeProduct($this->product, $quantity);
 

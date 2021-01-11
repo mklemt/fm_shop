@@ -13,39 +13,24 @@ use Symfony\Component\Uid\Uuid;
 
 class OrderBase extends TestCase
 {
-    /**
-     * @var AppDateTime
-     */
     protected AppDateTime $birthDate;
-    /**
-     * @var Identifier
-     */
-    protected Identifier $customerId;
-    /**
-     * @var Identifier
-     */
-    protected Identifier $productId;
-    /**
-     * @var Email
-     */
+    protected string $customerId;
+    protected string $productId;
     protected Email $email;
-    /**
-     * @var CustomerName
-     */
     protected CustomerName $customerName;
     protected ProductName $productName;
-    protected Identifier $orderId;
+    protected string $orderId;
 
     public function setUp()
     {
-        $this->customerId   = Identifier::fromString(Uuid::v4()->toRfc4122());
+        $this->customerId   = Uuid::v4()->toRfc4122();
         $this->email        = Email::create('mariusz@kr.pl');
         $this->customerName = CustomerName::create('Mariusz Klemt');
         $this->birthDate    = AppDateTime::createFromFormat("1980-01-01", "Y-m-d");
 
-        $this->productId   = Identifier::fromString(Uuid::v4()->toRfc4122());
+        $this->productId   = Uuid::v4()->toRfc4122();
         $this->productName = ProductName::create("Golden Eye");
-        $this->orderId     = Identifier::fromString(Uuid::v4()->toRfc4122());
+        $this->orderId     = Uuid::v4()->toRfc4122();
     }
 
 }

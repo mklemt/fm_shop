@@ -13,9 +13,6 @@ final class Order
     private Identifier $customerId;
     private array $lines = [];
     private array $events = [];
-    /**
-     * @var Identifier
-     */
     private Identifier $orderId;
 
     private function __construct(Identifier $orderId, Identifier $customerId)

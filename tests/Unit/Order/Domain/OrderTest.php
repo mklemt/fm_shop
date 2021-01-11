@@ -30,7 +30,7 @@ class OrderTest extends OrderBase
 
     public function testICanCreateOrderForProduct()
     {
-        $order    = Order::create($this->orderId->value(), $this->customerId->value());
+        $order    = Order::create($this->orderId, $this->customerId);
         $quantity = Quantity::unique(1);
         $order->addLineForUniqeProduct($this->product, $quantity);
         $this->assertNotEmpty($order->getLines());
@@ -40,7 +40,7 @@ class OrderTest extends OrderBase
     public function testICanCreateOrderForNonAvalilableProduct()
     {
         $this->expectException(OrderDomainException::class);
-        $order    = Order::create($this->orderId->value(), $this->customerId->value());
+        $order    = Order::create($this->orderId, $this->customerId);
         $quantity = Quantity::unique(1);
         $this->product->unAvailable();
         $order->addLineForUniqeProduct($this->product, $quantity);
@@ -50,7 +50,7 @@ class OrderTest extends OrderBase
     public function testICanOrderMoreThenOneProduct()
     {
         $this->expectException(QuantityDomainException::class);
-        $order    = Order::create($this->orderId->value(), $this->customerId->value());
+        $order    = Order::create($this->orderId, $this->customerId);
         $quantity = Quantity::unique(2);
         $order->addLineForUniqeProduct($this->product, $quantity);
 
@@ -59,7 +59,7 @@ class OrderTest extends OrderBase
     public function testICanOrderMoreThenOneProductByAdd()
     {
         $this->expectException(OrderDomainException::class);
-        $order    = Order::create($this->orderId->value(), $this->customerId->value());
+        $order    = Order::create($this->orderId, $this->customerId);
         $quantity = Quantity::add(2);
         $order->addLineForUniqeProduct($this->product, $quantity);
 

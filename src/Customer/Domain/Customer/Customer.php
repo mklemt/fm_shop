@@ -42,9 +42,11 @@ final class Customer
         return AppDateTime::checkAdultAge($this->dateOfBirth);
     }
 
-    public static function create(Identifier $identifier, CustomerName $customerName, Email $email, AppDateTime $dateOfBirth): self
+    public static function create(string $identifier, CustomerName $customerName, Email $email, AppDateTime $dateOfBirth): self
     {
-        return new self($identifier, $customerName, $email, $dateOfBirth);
+        $uuid = Identifier::fromString($identifier);
+
+        return new self($uuid, $customerName, $email, $dateOfBirth);
     }
 
     public function releaseEvents(): array
