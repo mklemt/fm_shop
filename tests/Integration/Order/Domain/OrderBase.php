@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Tests\Unit\Order\Domain;
+namespace App\Tests\Integration\Order\Domain;
 
 use App\Customer\Domain\CustomerName\CustomerName;
 use App\Customer\Domain\Email\Email;
@@ -34,6 +34,7 @@ class OrderBase extends TestCase
      */
     protected CustomerName $customerName;
     protected ProductName $productName;
+    protected Identifier $orderId;
 
     public function setUp()
     {
@@ -44,6 +45,7 @@ class OrderBase extends TestCase
 
         $this->productId   = Identifier::fromString(Uuid::v4()->toRfc4122());
         $this->productName = ProductName::create("Golden Eye");
+        $this->orderId     = Identifier::fromString(Uuid::v4()->toRfc4122());
     }
 
 }
