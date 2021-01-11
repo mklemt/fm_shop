@@ -63,7 +63,7 @@ final class Order
 
     public function orderId(): string
     {
-        return $this->orderId->value();
+        return $this->orderId->asString();
 
     }
 

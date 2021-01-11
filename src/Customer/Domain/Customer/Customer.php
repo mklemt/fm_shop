@@ -59,6 +59,6 @@ final class Customer
 
     public function customerId(): string
     {
-        return $this->identifier->value();
+        return $this->identifier->asString();
     }
 }

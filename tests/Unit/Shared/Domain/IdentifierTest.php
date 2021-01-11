@@ -32,7 +32,7 @@ class IdentifierTest extends TestCase
     public function testValid(string $guid): void
     {
         $generatedGuid = Identifier::fromString($guid);
-        $this->assertSame($generatedGuid->value(), $guid);
+        $this->assertSame($generatedGuid->asString(), $guid);
     }
 
     public function additionProvider(): array

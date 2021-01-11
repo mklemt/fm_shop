@@ -61,7 +61,7 @@ final class Product
 
     public function productId(): string
     {
-        return $this->identifier->value();
+        return $this->identifier->asString();
 
     }
 

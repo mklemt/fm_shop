@@ -28,7 +28,7 @@ final class Identifier
     /**
      * @return string
      */
-    public function value(): string
+    public function asString(): string
     {
         return $this->id;
     }
@@ -40,7 +40,7 @@ final class Identifier
      */
     public function equal(Identifier $identifier): bool
     {
-        return $identifier->value() == $this->value();
+        return $identifier->asString() == $this->asString();
     }
 
     private static function validate($id)
