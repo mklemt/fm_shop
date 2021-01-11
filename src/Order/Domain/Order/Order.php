@@ -58,7 +58,7 @@ final class Order
         return $this->lines;
     }
 
-    public function orderId()
+    public function orderId(): string
     {
         return $this->orderId->value();
 
